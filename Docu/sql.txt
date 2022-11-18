@@ -1,0 +1,56 @@
+if object_id('Matricula')is not null
+drop table Matricula
+create table Matricula(
+Id int identity(1,1),
+Numero varchar(20) primary key,
+Expedicion Date,
+Valido Date,
+Activo bit default 1
+)
+
+go
+if object_id('Conductor')is not null
+drop table Conductor
+create table Conductor(
+Id int identity(1,1),
+Identificacion varchar(20) primary key,
+Nombre varchar(20),
+Apellidos varchar(20),
+Direccion varchar(20),
+Telefono varchar(20),
+Correo varchar(20),
+FechaNacimiento Date,
+Activo bit default 1,
+MatriculaId VARCHAR(20) CONSTRAINT fk_conductor_matricula
+FOREIGN KEY REFERENCES Matricula(Numero)
+ON UPDATE CASCADE
+ON DELETE CASCADE
+)
+
+go
+if object_id('Sancion')is not null
+drop table Sancion
+create table Sancion(
+Id int identity(1,1) primary key,
+Tipo varchar(100),
+Observacion varchar(max),
+Valor decimal,
+IdentificacionId varchar(20) CONSTRAINT fk_sacion_conductor
+FOREIGN KEY REFERENCES Conductor(Identificacion)
+ON UPDATE CASCADE
+ON DELETE CASCADE
+)
+
+
+
+--
+--#region PropiedadesConstructorContext
+--#region Context
+--#region MetodoGet
+--#region MetodoGetID
+--#region MetodoGetPut
+--#region MetodoGetPost
+--#region MetodoGetDelete
+--
+--#endregion
+--#region Validaciones
